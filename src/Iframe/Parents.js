@@ -1,13 +1,14 @@
 import React from 'react'
 import { useRef ,useEffect,useState } from 'react'
+import { Link } from 'react-router-dom';
 
 export default function Parents() {
 
-    const [rMessage ,setreMessage]=useState("");
+    const [testResults ,setTestResults]=useState(" ");
     useEffect(()=>{
         window.addEventListener("message",(e)=>{
-            //if(e.origin !== 'http://localhost:3001/parent') return;
-            setreMessage("data from child :" +e.data);
+            // if(e.origin !== 'http://localhost:3000') return;
+            setTestResults(""+e.data);
         })
     },[]);
 
@@ -19,22 +20,37 @@ export default function Parents() {
 
     //     );
     // }
+    const downloadhandler=()=>{
+
+    const link = document.createElement('a');
+    link.download = 'test_result.json';
+    link.href = URL.createObjectURL(
+      new Blob([testResults], {
+        type: 'application/json',
+      })
+    );
+    link.click();
+    }
   return (
     
     <div>
        I am parents.
        <br/>
-       {/* <button onClick={sendMessage}>send message</button> */}
-       <br/>
+       <button onClick={downloadhandler}>Download report</button>
+       {/* {testResults}
+       
+       <a href='http://localhost:3001/child' target="_blank" rel="noreferrer">
+       <button>click</button>
+       </a>
+       <button>click</button> */}
       
-       <br/>
-       <p>{rMessage}</p>
        <iframe
         //ref={iframeRef}
-        src='http://localhost:3000'
+        src=' https://rtc-diagnostics-video-55mc3nvh-1571-dev.twil.io'
         width='600'
-        height='300'
+        height='600'
         title='child iframe'
+        allow="camera;microphone"
         >
        </iframe>
     </div>

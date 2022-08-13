@@ -4,30 +4,32 @@ import { useState,useRef } from 'react'
 
 export default function Child() {
  
-    const iframeRef=useRef(null);
-
+    // const iframeRef=useRef(null);
+    const data ={name:"mukesh",age:22}
     const sendMessage=()=>{
        // if(!iframeRef.current) return;
+        const res=JSON.stringify(data);
         window.parent.postMessage(
-            "hi dad",'http://localhost:3001/child'
+            res
+            // ,'http://localhost:3001/child'
 
         );
     }
 
-    const [rMessage ,setreMessage]=useState("");
-    useEffect(()=>{
-        window.addEventListener("message",(e)=>{
-            //if(e.origin !== 'http://localhost:3001/parent') return;
-            setreMessage("data from parents :" +e.data);
-        })
-    },[]);
+    // const [rMessage ,setreMessage]=useState("");
+    // useEffect(()=>{
+    //     window.addEventListener("message",(e)=>{
+    //         //if(e.origin !== 'http://localhost:3001/parent') return;
+    //         setreMessage("data from parents :" +e.data);
+    //     })
+    // },[]);
 
    
   return (
     <div>
-       <h>child</h>
+       <p>child</p>
        <button onClick={sendMessage}>send mess</button>
-       <p>{rMessage}</p>
+       {/* <p>{rMessage}</p> */}
     </div>
   )
 }
